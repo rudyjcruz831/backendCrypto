@@ -82,7 +82,7 @@ func GetBuyandSellPriceBTCtoUSD() (string, string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(res.StatusCode)
+	// fmt.Println(res.StatusCode)
 	data, errBody := ioutil.ReadAll(res.Body)
 	if errBody != nil {
 		log.Fatal(errBody)
@@ -91,13 +91,11 @@ func GetBuyandSellPriceBTCtoUSD() (string, string) {
 
 	var result ResponsePriceBTC
 	if err := json.Unmarshal(data, &result); err != nil { // Parse []byte to go struct pointer
-		fmt.Println("Can not unmarshal JSON")
+		fmt.Println("Can not unmarshal JSON GetBuyandSellPriceBTCtoUSD")
 	}
-	fmt.Println(string(data))
-	fmt.Println(result)
 
-	buyPrice := result.Result.Exchange.A[0]
-	sellPrice := result.Result.Exchange.B[0]
+	buyPrice := result.Result.Exchange.O
+	sellPrice := result.Result.Exchange.C[0]
 
 	buyPriceFloat, err := strconv.ParseFloat(buyPrice, 64)
 	if err != nil {
@@ -107,6 +105,7 @@ func GetBuyandSellPriceBTCtoUSD() (string, string) {
 	if err != nil {
 		log.Fatalf("%e\n", err)
 	}
+
 	return fmt.Sprintf("%.2f", buyPriceFloat), fmt.Sprintf("%.2f", sellPriceFloat)
 }
 
@@ -117,7 +116,7 @@ func GetBuyAndSellPriceETHtoUSD() (string, string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(res.StatusCode)
+	// fmt.Println(res.StatusCode)
 	data, errBody := ioutil.ReadAll(res.Body)
 	if errBody != nil {
 		log.Fatal(errBody)
@@ -126,13 +125,13 @@ func GetBuyAndSellPriceETHtoUSD() (string, string) {
 
 	var result ResponsePriceETH
 	if err := json.Unmarshal(data, &result); err != nil { // Parse []byte to go struct pointer
-		fmt.Println("Can not unmarshal JSON")
+		fmt.Println("Can not unmarshal JSON GetBuyAndSellPriceETHtoUSD")
 	}
-	fmt.Println(string(data))
-	fmt.Println(result)
+	// fmt.Println(string(data))
+	// fmt.Println(result)
 
-	buyPrice := result.Result.Exchange.A[0]
-	sellPrice := result.Result.Exchange.B[0]
+	buyPrice := result.Result.Exchange.O
+	sellPrice := result.Result.Exchange.C[0]
 
 	buyPriceFloat, err := strconv.ParseFloat(buyPrice, 64)
 	if err != nil {
