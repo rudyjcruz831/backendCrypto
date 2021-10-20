@@ -12,7 +12,7 @@ import (
 func main() {
 	// grabing port from env for running server local or on heroku
 	port := os.Getenv("PORT")
-	host := os.Getenv("host")
+	// host := os.Getenv("host")
 	// start the GIN route
 	// fmt.Println("port", port)
 	router := gin.Default()
