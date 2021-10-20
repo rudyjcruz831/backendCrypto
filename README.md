@@ -32,6 +32,7 @@ To run backend, you need to install Go and set your Go workspace first.
     
     2. I do not thing I over designed. I did worked more on the designed of the backend for the reason that I understand how to better created it.
     
-    3. If I had to scale for 100 users I would have to upgarade the heroku servers to handle more traffic. Second I would think of a catching system or maybe load balancing. The last thing is better design for scaling backend and frontend. 
+    3. If I had to scale for 100 users I would have to upgarade the heroku servers to handle more traffic. Second I would think of a catching system or maybe load 
+    balancing. The last thing is better design for scaling backend and frontend. 
     
     4. 
