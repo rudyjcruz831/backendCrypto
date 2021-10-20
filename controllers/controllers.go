@@ -32,6 +32,11 @@ type BestPrices struct {
 	BuySource  string `json:"buy_source"`
 }
 
+type TestingHome struct {
+	Name string `json:"name"`
+	Text string `json:"text"`
+}
+
 // GetJSON make a get request and returns
 // prices for ETH and BTC from Kraken and Coinbase API
 func GetCryptoInfo(c *gin.Context) {
@@ -170,5 +175,6 @@ func GetBestPrices(c *gin.Context) {
 }
 
 func GetSomething(c *gin.Context) {
-	c.IndentedJSON(http.StatusCreated, nil)
+	t := TestingHome{Name: "Rudy Cruz", Text: "Testing home see if it works in heroku"}
+	c.IndentedJSON(http.StatusCreated, t)
 }
