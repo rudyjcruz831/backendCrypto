@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/rudyjcruz831/backendCrypto/controllers"
@@ -23,5 +25,9 @@ func main() {
 	router.GET("/best", controllers.GetBestPrices)
 
 	// the http route where it starts listing
-	router.Run("localhost:8080")
+	port := os.Getenv("PORT")
+	// if err != nil {
+	// 	log.Fatalf(err)
+	// }
+	router.Run("localhost:" + port)
 }
