@@ -18,6 +18,7 @@ func main() {
 	}))
 
 	// routes that get created in the controller folder
+	router.GET("/", controllers.GetSomething)
 	router.GET("/info", controllers.GetCryptoInfo)
 	router.GET("/best", controllers.GetBestPrices)
 

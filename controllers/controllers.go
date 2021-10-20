@@ -168,3 +168,7 @@ func GetBestPrices(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusCreated, exB)
 }
+
+func GetSomething(c *gin.Context) {
+	c.IndentedJSON(http.StatusCreated, nil)
+}
