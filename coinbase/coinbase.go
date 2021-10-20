@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-
-	"github.com/rudyjcruz831/backendCrypto/utils"
 )
 
 type ResponsePrice struct {
@@ -21,16 +19,16 @@ type Price struct {
 }
 
 func newRequest(endpoint string) *http.Request {
-	env := utils.GetENV{}
+	// env := utils.GetENV{}
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("https://%s", endpoint), nil)
 	if err != nil {
 		log.Fatalf("error %e", err)
 	}
 	// fmt.Println(req)
-	apiKey := env.GoDotEnvVariable("COINBASE_KEY")
-	secret := env.GoDotEnvVariable("COINBASE_SECRET")
-	req.Header.Add(apiKey, secret)
+	// apiKey := env.GoDotEnvVariable("COINBASE_KEY")
+	// secret := env.GoDotEnvVariable("COINBASE_SECRET")
+	// req.Header.Add(apiKey, secret)
 	return req
 }
 
