@@ -6,16 +6,21 @@ import (
 	"github.com/rudyjcruz831/backendCrypto/controllers"
 )
 
+// create the routes using GIN web framework
 func main() {
 
+	// start the GIN route
 	router := gin.Default()
-	// router.Get
+	// router for cors to be able to access from react
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"http://localhost:8080", "*"},
 		AllowMethods: []string{"POST", "GET", "UPDATE", "DELETE", "PUT"},
-		// AllowHeaders: []string{"Authorization", "Content-Type", "user_id"},
 	}))
-	router.GET("/info", controllers.GetCryptoInfo)
-	router.Run("localhost:8080")
 
+	// routes that get created in the controller folder
+	router.GET("/info", controllers.GetCryptoInfo)
+	router.GET("/best", controllers.GetBestPrices)
+
+	// the http route where it starts listing
+	router.Run("localhost:8080")
 }
