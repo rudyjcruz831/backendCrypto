@@ -7,8 +7,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-
-	"github.com/rudyjcruz831/backendCrypto/utils"
 )
 
 // Response type Different for mapping BTC
@@ -70,16 +68,16 @@ type Exchange struct {
 // create the request to make http call to server takes in
 // name of endpoint after https://
 func newRequest(endpoint string) *http.Request {
-	env := utils.GetENV{}
+	// env := utils.GetENV{}
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("https://%s", endpoint), nil)
 	if err != nil {
 		log.Fatalf("error %e", err)
 	}
 	// fmt.Println(req)
-	apiKey := env.GoDotEnvVariable("COINBASE_KEY")
-	secret := env.GoDotEnvVariable("COINBASE_SECRET")
-	req.Header.Add(apiKey, secret)
+	// apiKey := env.GoDotEnvVariable("COINBASE_KEY")
+	// secret := env.GoDotEnvVariable("COINBASE_SECRET")
+	// req.Header.Add(apiKey, secret)
 	return req
 }
 
