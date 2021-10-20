@@ -42,10 +42,22 @@ type TestingHome struct {
 func GetCryptoInfo(c *gin.Context) {
 
 	// functions that handle getting prices from coinbase
-	buyPriceBTCcoinbase := coinbase.GetBuyPriceBTCtoUSD()
-	sellPriceBTCcoinbase := coinbase.GetSellPriceBTCtoUSD()
-	buyPriceETHcoinbase := coinbase.GetBuyPriceETHtoUSD()
-	sellPriceETHcoinbase := coinbase.GetSellPriceETHtoUSD()
+	buyPriceBTCcoinbase, err := coinbase.GetBuyPriceBTCtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
+	sellPriceBTCcoinbase, err := coinbase.GetSellPriceBTCtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
+	buyPriceETHcoinbase, err := coinbase.GetBuyPriceETHtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
+	sellPriceETHcoinbase, err := coinbase.GetSellPriceETHtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
 
 	// fuctions that handle getting prices from kraken
 	buyPriceBTCkraken, sellPriceBTCkraken := kraken.GetBuyandSellPriceBTCtoUSD()
@@ -82,18 +94,30 @@ func GetCryptoInfo(c *gin.Context) {
 	ex.Crypto = append(ex.Crypto, bitcoinKraken)
 	ex.Crypto = append(ex.Crypto, ethereumKraken)
 
-	c.IndentedJSON(http.StatusCreated, ex)
+	c.IndentedJSON(http.StatusAccepted, ex)
 }
 
 // GetJSON make a get request and returns best prices
 // for ETH and BTC from Kraken and Coinbase API
 func GetBestPrices(c *gin.Context) {
-	buyPriceBTCcoinbase := coinbase.GetBuyPriceBTCtoUSD()
+	buyPriceBTCcoinbase, err := coinbase.GetBuyPriceBTCtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
 
-	sellPriceBTCcoinbase := coinbase.GetSellPriceBTCtoUSD()
+	sellPriceBTCcoinbase, err := coinbase.GetSellPriceBTCtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
 
-	buyPriceETHcoinbase := coinbase.GetBuyPriceETHtoUSD()
-	sellPriceETHcoinbase := coinbase.GetSellPriceETHtoUSD()
+	buyPriceETHcoinbase, err := coinbase.GetBuyPriceETHtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
+	sellPriceETHcoinbase, err := coinbase.GetSellPriceETHtoUSD()
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err)
+	}
 
 	buyPriceBTCkraken, sellPriceBTCkraken := kraken.GetBuyandSellPriceBTCtoUSD()
 	buyPriceETHkraken, sellPriceETHkraken := kraken.GetBuyAndSellPriceETHtoUSD()
@@ -171,7 +195,7 @@ func GetBestPrices(c *gin.Context) {
 	exB.BestPrices = append(exB.BestPrices, eBest)
 	exB.BestPrices = append(exB.BestPrices, bBest)
 
-	c.IndentedJSON(http.StatusCreated, exB)
+	c.IndentedJSON(http.StatusAccepted, exB)
 }
 
 func GetSomething(c *gin.Context) {

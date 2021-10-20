@@ -25,15 +25,11 @@ func newRequest(endpoint string) *http.Request {
 	if err != nil {
 		log.Fatalf("error %e", err)
 	}
-	// fmt.Println(req)
-	// apiKey := env.GoDotEnvVariable("COINBASE_KEY")
-	// secret := env.GoDotEnvVariable("COINBASE_SECRET")
-	// req.Header.Add(apiKey, secret)
 	return req
 }
 
 // get buy prices for BTC to USD
-func GetBuyPriceBTCtoUSD() string {
+func GetBuyPriceBTCtoUSD() (string, error) {
 
 	req := newRequest("api.coinbase.com/v2/prices/BTC-USD/buy")
 
@@ -50,24 +46,25 @@ func GetBuyPriceBTCtoUSD() string {
 
 	var result ResponsePrice
 	if err := json.Unmarshal(data, &result); err != nil { // Parse []byte to go struct pointer
-		fmt.Println("Can not unmarshal JSON GetBuyPriceBTCtoUSD")
+		// fmt.Println("Can not unmarshal JSON GetBuyPriceBTCtoUSD")
+		return "", err
 	}
 	// fmt.Println(result.Data)
-	return result.Data.Amount
+	return result.Data.Amount, nil
 }
 
 // get buy prices for ETH to USD
-func GetBuyPriceETHtoUSD() string {
+func GetBuyPriceETHtoUSD() (string, error) {
 
 	req := newRequest("api.coinbase.com/v2/prices/ETH-USD/buy")
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 	data, errBody := ioutil.ReadAll(res.Body)
 	if errBody != nil {
-		log.Fatal(errBody)
+		return "", errBody
 	}
 	res.Body.Close()
 
@@ -76,10 +73,10 @@ func GetBuyPriceETHtoUSD() string {
 		fmt.Println("Can not unmarshal JSON GetBuyPriceETHtoUSD")
 	}
 	// fmt.Println(result.Data)
-	return result.Data.Amount
+	return result.Data.Amount, nil
 }
 
-func GetSellPriceBTCtoUSD() string {
+func GetSellPriceBTCtoUSD() (string, error) {
 
 	req := newRequest("api.coinbase.com/v2/prices/BTC-USD/sell")
 
@@ -98,10 +95,10 @@ func GetSellPriceBTCtoUSD() string {
 		fmt.Println("Can not unmarshal JSON GetSellPriceBTCtoUSD")
 	}
 	// fmt.Println(result.Data)
-	return result.Data.Amount
+	return result.Data.Amount, nil
 }
 
-func GetSellPriceETHtoUSD() string {
+func GetSellPriceETHtoUSD() (string, error) {
 
 	req := newRequest("api.coinbase.com/v2/prices/ETH-USD/sell")
 
@@ -120,5 +117,5 @@ func GetSellPriceETHtoUSD() string {
 		fmt.Println("Can not unmarshal JSON GetSellPriceETHtoUSD")
 	}
 	// fmt.Println(result.Data)
-	return result.Data.Amount
+	return result.Data.Amount, nil
 }
