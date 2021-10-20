@@ -36,6 +36,5 @@ To run backend, you need to install Go and set your Go workspace first.
     catching system or maybe load balancing. The last thing is better design for scaling backend and frontend. 
     
     4. I needed more time to understand frontend design and better practices to develop a much more robust frontend. 
-    For example frontend better understand hooks like useState(). With backend I need more time to create proper testing for 
-    endpoints and add a layer of security. Design for both frontend and backend need more work. 
-    For example for backend I am calling api twice where I might be able to just call external APIs once. 
+    For example frontend I would like more time to understand hooks like useState(). With backend I need more time to create proper testing for 
+    endpoints and add a layer of security. For example for backend I am calling api twice where I might be able to just call external APIs once. 
