@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -10,8 +12,10 @@ import (
 
 // create the routes using GIN web framework
 func main() {
-
+	// grabing port from env for running server local or on heroku
+	port := os.Getenv("PORT")
 	// start the GIN route
+	// fmt.Println("port", port)
 	router := gin.Default()
 	// router for cors to be able to access from react
 	router.Use(cors.New(cors.Config{
@@ -23,11 +27,26 @@ func main() {
 	router.GET("/", controllers.GetSomething)
 	router.GET("/info", controllers.GetCryptoInfo)
 	router.GET("/best", controllers.GetBestPrices)
+	// fmt.Println("something:", os.Getenv("PORT"))
 
-	// the http route where it starts listing
-	port := os.Getenv("PORT")
-	// if err != nil {
-	// 	log.Fatalf(err)
-	// }
+	if port == "" {
+		port = "8080"
+	}
+
+	PrintMemUsage()
 	router.Run("localhost:" + port)
+	PrintMemUsage()
+}
+
+func PrintMemUsage() {
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	// For info on each, see: https://golang.org/pkg/runtime/#MemStats
+	fmt.Printf("Alloc = %v MiB", bToMb(m.Alloc))
+	fmt.Printf("\tTotalAlloc = %v MiB", bToMb(m.TotalAlloc))
+	fmt.Printf("\tSys = %v MiB", bToMb(m.Sys))
+	fmt.Printf("\tNumGC = %v\n", m.NumGC)
+}
+func bToMb(b uint64) uint64 {
+	return b / 1024 / 1024
 }
