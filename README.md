@@ -26,3 +26,6 @@ To run backend, you need to install Go and set your Go workspace first.
 # Run
     $ go mod tidy
     $ go run main.go
+    
+ # Questionnaire:
+    1. One of the biggest things was design it had to be limieted for example I did not add security. Testing for the backend and 
