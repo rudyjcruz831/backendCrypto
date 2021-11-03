@@ -18,7 +18,7 @@ func main() {
 	router := gin.Default()
 	// router for cors to be able to access from react
 	router.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:8080", "*"},
+		AllowOrigins: []string{"http://localhost:8080"},
 		AllowMethods: []string{"POST", "GET", "UPDATE", "DELETE", "PUT"},
 	}))
 
