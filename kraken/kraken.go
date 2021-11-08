@@ -54,7 +54,7 @@ type Exchange struct {
 // 	"result":{
 // 		"XETHZUSD":{
 // 			"a":["3884.88000","1","1.000"], string
-// 			"b":["3884.87000","7","7.000"], // Sell price
+// 			"b":["3884.87000","7","7.000"], // Sell price string
 // 			"c":["3884.93000","0.14754333"], string
 // 			"v":["1909.39463462","23895.66354427"], string
 // 			"p":["3870.36079","3798.31333"], string
@@ -82,46 +82,51 @@ func newRequest(endpoint string) *http.Request {
 }
 
 // gets the json for price of BTC to USD from kraken
-func GetBuyandSellPriceBTCtoUSD() (string, string) {
+func GetBuyandSellPriceBTCtoUSD() (string, string, error) {
 	req := newRequest("api.kraken.com/0/public/Ticker?pair=XBTUSD")
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return "", "", err
+		//log.Fatal(err)
 	}
 
 	// fmt.Println(res.StatusCode)
 	data, errBody := ioutil.ReadAll(res.Body)
 	if errBody != nil {
 		log.Fatal(errBody)
+		return "", "", errBody
 	}
 	res.Body.Close()
 
 	var result ResponsePriceBTC
 	if err := json.Unmarshal(data, &result); err != nil { // Parse []byte to go struct pointer
-		fmt.Printf("Can not unmarshal JSON GetBuyandSellPriceBTCtoUSD: %s\n", err)
+		return "", "", err
+		//fmt.Printf("Can not unmarshal JSON GetBuyandSellPriceBTCtoUSD: %s\n", err)
 	}
 
 	buyPrice := result.Result.Exchange.A[0]
 	sellPrice := result.Result.Exchange.C[0]
 
-	f, err := strconv.ParseFloat(sellPrice, 64)
+	f, _ := strconv.ParseFloat(sellPrice, 64)
 	takenOff := f * float64(0.009)
 
 	buyPriceFloat, err := strconv.ParseFloat(buyPrice, 64)
 	if err != nil {
-		log.Fatalf("%e\n", err)
+		// log.Fatalf("%e\n", err)
+		return "", "", err
 	}
 	sellPriceFloat, err := strconv.ParseFloat(sellPrice, 64)
 	if err != nil {
-		log.Fatalf("%e\n", err)
+		// log.Fatalf("%e\n", err)
+		return "", "", err
 	}
 	sellPriceFloat -= takenOff
-	return fmt.Sprintf("%.2f", buyPriceFloat), fmt.Sprintf("%.2f", sellPriceFloat)
+	return fmt.Sprintf("%.2f", buyPriceFloat), fmt.Sprintf("%.2f", sellPriceFloat), nil
 }
 
 // gets the json for price of ETH to USD from kraken
-func GetBuyAndSellPriceETHtoUSD() (string, string) {
+func GetBuyAndSellPriceETHtoUSD() (string, string, error) {
 	req := newRequest("api.kraken.com/0/public/Ticker?pair=XETHZUSD")
 
 	res, err := http.DefaultClient.Do(req)
@@ -159,5 +164,5 @@ func GetBuyAndSellPriceETHtoUSD() (string, string) {
 		log.Fatalf("%e\n", err)
 	}
 	sellPriceFloat -= takenOff
-	return fmt.Sprintf("%.2f", buyPriceFloat), fmt.Sprintf("%.2f", sellPriceFloat)
+	return fmt.Sprintf("%.2f", buyPriceFloat), fmt.Sprintf("%.2f", sellPriceFloat), nil
 }
