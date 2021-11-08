@@ -30,8 +30,18 @@ To run backend, you need to install Go and set your Go workspace first.
 
 # API 
 Routes for API examples
-## Examples
->hello
+## Get list of sell and buy price 
+### Request
+GET /info
+    
+### Response
+
+### Request 
+GET /best
+
+### Response
+    
+
 
     
 # Questionnaire:
