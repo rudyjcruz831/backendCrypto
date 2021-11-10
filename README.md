@@ -26,8 +26,84 @@ To run backend, you need to install Go and set your Go workspace first.
 # Run
     $ go mod tidy
     $ go run main.go
+
+
+# API 
+Routes for API examples
+## Get list of sell and buy price for ETH and BTC
+### Request
+GET /info
+    curl http://localhost:8081/info
+### Response
+    HTTP/1.1 200 OK
+    Status: 200 OK
+    Connection: close
+    Content-Type: application/json
     
- # Questionnaire:
+    {
+        "Exchanges": [
+            {
+                "source": "Coinbase",
+                "name": "Bitcoin",
+                "buy": "67451.12",
+                "sell": "66775.75"
+            },
+            {
+                "source": "Coinbase",
+                "name": "Ethereum",
+                "buy": "4754.21",
+                "sell": "4706.33"
+            },
+            {
+                "source": "Kraken",
+                "name": "Bitcoin",
+                "buy": "67105.00",
+                "sell": "66497.69"
+            },
+            {
+                "source": "Kraken",
+                "name": "Ethereum",
+                "buy": "4730.46",
+                "sell": "4687.89"
+            }
+        ]
+    }
+    
+
+
+## Get the best prices from Kraken and Coinbase
+### Request 
+GET /best
+    curl http://localhost:8081/best
+### Response
+    HTTP/1.1 200 OK
+    Status: 200 OK
+    Connection: close
+    Content-Type: application/json
+
+    {
+        "best_prices": [
+            {
+                "name": "Ethereum",
+                "best_sell": "4702.93",
+                "sell_source": "Coinbase",
+                "best_buy": "4726.81",
+                "buy_source": "Kraken"
+            },
+            {
+                "name": "Bitcoin",
+                "best_sell": "66771.08",
+                "sell_source": "Coinbase",
+                "best_buy": "67094.70",
+                "buy_source": "Kraken"
+            }
+        ]
+    }
+    
+
+
+    
+# Questionnaire:
     1. One of the biggest things was design it had to be limieted for example I did not add security. 
     Making test for backend or frontend. Also request for app was simple did not really need to make a robust web.
     

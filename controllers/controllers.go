@@ -37,7 +37,7 @@ type TestingHome struct {
 	Text string `json:"text"`
 }
 
-// GetJSON make a get request and returns
+// GetJSON make a get request and returns Prices for sell and buy
 // prices for ETH and BTC from Kraken and Coinbase API
 func GetCryptoInfo(c *gin.Context) {
 
@@ -60,8 +60,14 @@ func GetCryptoInfo(c *gin.Context) {
 	}
 
 	// fuctions that handle getting prices from kraken
-	buyPriceBTCkraken, sellPriceBTCkraken := kraken.GetBuyandSellPriceBTCtoUSD()
-	buyPriceETHkraken, sellPriceETHkraken := kraken.GetBuyAndSellPriceETHtoUSD()
+	buyPriceBTCkraken, sellPriceBTCkraken, err1 := kraken.GetBuyandSellPriceBTCtoUSD()
+	if err1 != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err1)
+	}
+	buyPriceETHkraken, sellPriceETHkraken, err2 := kraken.GetBuyAndSellPriceETHtoUSD()
+	if err2 != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err2)
+	}
 
 	bitcoinCoinbase := Crypto{
 		Name:   "Bitcoin",
@@ -94,7 +100,7 @@ func GetCryptoInfo(c *gin.Context) {
 	ex.Crypto = append(ex.Crypto, bitcoinKraken)
 	ex.Crypto = append(ex.Crypto, ethereumKraken)
 
-	c.IndentedJSON(http.StatusAccepted, ex)
+	c.IndentedJSON(http.StatusOK, ex)
 }
 
 // GetJSON make a get request and returns best prices
@@ -119,8 +125,14 @@ func GetBestPrices(c *gin.Context) {
 		c.IndentedJSON(http.StatusInternalServerError, err)
 	}
 
-	buyPriceBTCkraken, sellPriceBTCkraken := kraken.GetBuyandSellPriceBTCtoUSD()
-	buyPriceETHkraken, sellPriceETHkraken := kraken.GetBuyAndSellPriceETHtoUSD()
+	buyPriceBTCkraken, sellPriceBTCkraken, err1 := kraken.GetBuyandSellPriceBTCtoUSD()
+	if err1 != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err1)
+	}
+	buyPriceETHkraken, sellPriceETHkraken, err2 := kraken.GetBuyAndSellPriceETHtoUSD()
+	if err2 != nil {
+		c.IndentedJSON(http.StatusInternalServerError, err2)
+	}
 
 	bitcoinCoinbase := Crypto{
 		Name:   "Bitcoin",
@@ -195,10 +207,11 @@ func GetBestPrices(c *gin.Context) {
 	exB.BestPrices = append(exB.BestPrices, eBest)
 	exB.BestPrices = append(exB.BestPrices, bBest)
 
-	c.IndentedJSON(http.StatusAccepted, exB)
+	c.IndentedJSON(http.StatusOK, exB)
 }
 
+// GetJSON to test home endpoint
 func GetSomething(c *gin.Context) {
 	t := TestingHome{Name: "Rudy Cruz", Text: "Testing home see if it works in heroku"}
-	c.IndentedJSON(http.StatusCreated, t)
+	c.IndentedJSON(http.StatusOK, t)
 }
