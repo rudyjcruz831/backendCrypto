@@ -100,7 +100,7 @@ func GetCryptoInfo(c *gin.Context) {
 	ex.Crypto = append(ex.Crypto, bitcoinKraken)
 	ex.Crypto = append(ex.Crypto, ethereumKraken)
 
-	c.IndentedJSON(http.StatusAccepted, ex)
+	c.IndentedJSON(http.StatusOK, ex)
 }
 
 // GetJSON make a get request and returns best prices
@@ -207,11 +207,11 @@ func GetBestPrices(c *gin.Context) {
 	exB.BestPrices = append(exB.BestPrices, eBest)
 	exB.BestPrices = append(exB.BestPrices, bBest)
 
-	c.IndentedJSON(http.StatusAccepted, exB)
+	c.IndentedJSON(http.StatusOK, exB)
 }
 
 // GetJSON to test home endpoint
 func GetSomething(c *gin.Context) {
 	t := TestingHome{Name: "Rudy Cruz", Text: "Testing home see if it works in heroku"}
-	c.IndentedJSON(http.StatusCreated, t)
+	c.IndentedJSON(http.StatusOK, t)
 }

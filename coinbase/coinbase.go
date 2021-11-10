@@ -35,12 +35,14 @@ func GetBuyPriceBTCtoUSD() (string, error) {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return "", err
+		//log.Fatal(err)
 	}
 	// fmt.Println(res.StatusCode)
 	data, errBody := ioutil.ReadAll(res.Body)
 	if errBody != nil {
-		log.Fatal(errBody)
+		return "", errBody
+		//log.Fatal(errBody)
 	}
 	res.Body.Close()
 
@@ -76,6 +78,7 @@ func GetBuyPriceETHtoUSD() (string, error) {
 	return result.Data.Amount, nil
 }
 
+// get sell price for BTC to USD
 func GetSellPriceBTCtoUSD() (string, error) {
 
 	req := newRequest("api.coinbase.com/v2/prices/BTC-USD/sell")
@@ -98,6 +101,7 @@ func GetSellPriceBTCtoUSD() (string, error) {
 	return result.Data.Amount, nil
 }
 
+// get sell price for ETH to USD
 func GetSellPriceETHtoUSD() (string, error) {
 
 	req := newRequest("api.coinbase.com/v2/prices/ETH-USD/sell")

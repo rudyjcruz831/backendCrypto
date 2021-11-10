@@ -26,7 +26,7 @@ func StartApp() {
 	router.GET("/best", controllers.GetBestPrices)
 	// if port env is empty then make it default 8080
 	if port == "" {
-		port = "8080"
+		port = "8081"
 	}
 	// running the server on localhost with given port
 	router.Run(":" + port)
